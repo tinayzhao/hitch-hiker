@@ -10,14 +10,18 @@
   justify-content: center;
   border: 1px black solid;
 }
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
 
 .input {
   margin-top: 4px;
   height: 24px;
   width: 80%;
-  border: 1px solid black;
+  border: none;
+  -webkit-appearance: none;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: rgb(236, 236, 236);
 }
 
@@ -25,7 +29,8 @@
   margin-top: 4px;
   height: 24px;
   width: 84%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  -webkit-appearance: none;
   text-align: center;
   border-radius: 2px;
   background-color: rgb(236, 236, 236);
