@@ -2,7 +2,7 @@
   width: 80vw;
   max-width: 400px;
   height: 90vh;
-  margin: auto;
+  margin: 0 auto;
   margin-top: 5vh;
   display: flex;
   flex-direction: column;
@@ -15,50 +15,87 @@ input:-webkit-autofill {
 }
 
 .input {
-  margin-top: 4px;
+  outline-width: 0;
+  margin-top: 15px;
   height: 24px;
   width: 80%;
   border: none;
   -webkit-appearance: none;
-  text-align: center;
-  border-radius: 4px;
-  background-color: rgb(236, 236, 236);
+  /* text-align: center; */
+  font-size: 12px;
+  /* border-radius: 4px; */
+  background: none;
+  border-bottom: 1px solid gray;
+  /* background-color: rgb(236, 236, 236); */
 }
 
-.inputDate {
-  margin-top: 4px;
-  height: 24px;
-  width: 84%;
-  /* border: 1px solid black; */
-  -webkit-appearance: none;
-  text-align: center;
-  border-radius: 2px;
-  background-color: rgb(236, 236, 236);
-}
-.dateLabel {
-  font-size: smaller;
-  text-align: left;
-}
-.inputDateWrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 24px;
-  width: 80%;
-  margin-top: 4px;
+
+.formContainer {
+  margin: 0 auto;
+  /* background: lightgray; */
 }
 
 .submit {
-  margin-top: 8px;
-  border-radius: 2px;
+  margin-top: 5px;
+  border-radius: 50px;
+  width: 220px;
+  padding: 10px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background: #61B58F;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
   transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.carLogoContainer {
+
+}
+
+.carLogo {
+  height: 100px;
+  width: 150px;
+  margin: 0 auto;
+  margin-right: 15px;
+}
+
+.back {
+  composes: submit;
+  background: gray;
 }
 
 .submit:hover {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
   transform: scale(1.02);
+}
+
+.formInputContainer {
+  margin: 0px auto;
+  padding: 40px 0px;
+  /* width: 100%; */
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  height: 35%;
+}
+
+.formHeader {
+  line-height: 0;
+}
+
+.inputDate {
+  composes: input;
+  text-align: center;
+  /* width: 85%; */
+}
+
+input[type="date"]:not(.has-value):before{
+  color: gray;
+  content: attr(placeholder);
+  font-family: sans-serif;
+  margin-right: 10px;
 }

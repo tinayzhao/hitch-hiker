@@ -9,8 +9,11 @@ const Form = () => {
   const [returnDate, updateReturnDate] = useState(``);
   const [tripDuration, updateTripDuration] = useState(``);
   const [seats, updateSeats] = useState(0);
+  const [departureTime, updateDepartureTime] = useState(``);
 
   return (
+    <div className={styles.formContainer}>
+      
     <form
       className={styles.container}
       onSubmit={e => {
@@ -86,11 +89,16 @@ const Form = () => {
         //console.log(seats);
       }}
     >
+      <div className={styles.carLogoContainer}>
+          <img className={styles.carLogo} src='/car.png'/>
+      </div>
+      <h1 className={styles.formHeader}>Schedule a Trip!</h1>
+        <div className={styles.formInputContainer}>
       {name !== `` && <label for={`name`}>Name</label>}
       <input
         className={styles.input}
-        type={`name`}
-        placeholder={`name`}
+        type='text'
+        placeholder={`Name`}
         name={`name`}
         onChange={e => {
           updateName(e.target.value);
@@ -115,23 +123,22 @@ const Form = () => {
         }}
       />
       {/* <div className={styles.inputDateWrapper}> */}
-      <label for={`startDate`}>Start</label>
+      <label className={styles.dateLabel}></label>
       <input
-        className={styles.input}
-        placeholder={`Start Date`}
+        className={styles.inputDate}
+        placeholder={`Departure Date`}
         type={`date`}
         name={`startDate`}
         onChange={e => {
           updateStartDate(e.target.value);
         }}
       />
+
       {/* </div> */}
       {/* <div className={styles.inputDateWrapper}> */}
-      <label for={`returnDate`} className={styles.dateLabel}>
-        Return
-      </label>
-      <input
-        className={styles.input}
+      <label className={styles.dateLabel}></label>
+          <input
+        className={styles.inputDate}
         type={`date`}
         placeholder={`Return Date`}
         name={`returnDate`}
@@ -145,7 +152,7 @@ const Form = () => {
           <label for={`duration`}>Trip Duration </label>
 
           <input
-            className={styles.input}
+            className={styles.inputDate}
             type={`text`}
             name={`duration`}
             onChange={e => {
@@ -155,17 +162,32 @@ const Form = () => {
         </>
       )}
       {/* <label for={`seats`}>Seats</label> */}
+
+          <input
+            className={styles.input}
+            type={`time`}
+            placeholder={`Departure time`}
+            name={`time`}
+            onChange={e => {
+              updateDepartureTime(e.target.value);
+            }}
+          />
+
       <input
         className={styles.input}
-        placeholder={`number of seats`}
+        placeholder={`Seats Available`}
         type={`number`}
         name={`seats`}
         onChange={e => {
           updateSeats(e.target.value);
         }}
       />
+      </div>
       <input type={`submit`} className={styles.submit} />
+      <button className={styles.back}>Back</button>
     </form>
+    
+    </div>
   );
 };
 
