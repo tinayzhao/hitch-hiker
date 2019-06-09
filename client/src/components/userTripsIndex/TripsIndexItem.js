@@ -5,7 +5,7 @@ import TripExpand from './TripExpand';
 const TripsIndexItem = () => {
     const [expand, setExpand] = useState(false);
 
-    const node = React.createRef();
+    const node = React.useRef(null);
 
     const hideExpand = (e) => {
         if (!node.current.contains(e.target)) {
@@ -25,6 +25,7 @@ const TripsIndexItem = () => {
              onClick={() => setExpand(true)}>
             <div className={styles['tripsItemLabel']}>DESTINATION:</div>
             <div className={styles['tripsItemLabel']}>START LOCATION:</div>
+            <div className={styles['tripsItemLabel']}>TRIP BEGINS:</div>
             {(expand) ? <TripExpand /> : ''}
         </div>
 
