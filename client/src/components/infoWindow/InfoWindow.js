@@ -8,7 +8,7 @@ const InfoWindow = ({
   departureTime,
   returnTime,
   seats,
-  callback,
+  action,
 }) => {
   return (
     <div className={styles.container}>
@@ -18,6 +18,7 @@ const InfoWindow = ({
       <p>Departure Time: {departureTime}</p>
       <p>Return Time: {returnTime}</p>
       <p>Seats Remaining: {seats}</p>
+      <button onClick={action}>Join Ride!</button>
     </div>
   );
 };

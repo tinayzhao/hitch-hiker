@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import firebase from "./../../firebaseConfig.js";
 import InfoWindow from "../infoWindow/InfoWindow";
 import ReactDOMServer from "react-dom/server";
+import {AppContext} from "../context/Context";
 
 const Map = ({ options, onMount, className }) => {
+  const { state, dispatch } = useContext(AppContext);
   const props = { ref: useRef(), className };
   const onLoad = () => {
     const map = new window.google.maps.Map(props.ref.current, options);
@@ -16,24 +18,36 @@ const Map = ({ options, onMount, className }) => {
         position: uluru,
         map: map,
       });
-      let contentString = ReactDOMServer.renderToString(
-        <InfoWindow
-          driver={newPosition.driver}
-          destination={newPosition.name}
-          departureTime={`1pm`}
-          returnTime={`2pm`}
-          seats={4}
-        />
-      );
-      console.log(contentString);
-      const infowindow = new window.google.maps.InfoWindow({
-        content: contentString,
+      var infoWindow = new window.google.maps.InfoWindow({
+        content: " "
       });
+      
+      // let contentString = ReactDOMServer.renderToString(
+      //   <InfoWindow
+      //     driver={newPosition.driver}
+      //     destination={newPosition.name}
+      //     departureTime={`1pm`}
+      //     returnTime={`2pm`}
+      //     seats={4}
+      //     action={window.InfoWindowNavigationFunction.NavigateOnClick}
+      //   />
+      // );
+      window.InfoWindowNavigationFunction = {
+        NavigateOnClick: function () {
+          dispatch({type: 'UPDATE_DOCUSIGN', payload: true});
+        }
+      }
+      var contentBtn = `<button onclick="window.InfoWindowNavigationFunction.NavigateOnClick()">${state.docusignActive}</button>`;
       marker.addListener("click", function() {
-        infowindow.open(map, marker);
+        infoWindow.setContent(contentBtn);
+        infoWindow.open(map, marker);
       });
     });
+
+    
     onMount && onMount(map);
+
+
   };
 
   useEffect(() => {
