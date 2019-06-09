@@ -89,6 +89,10 @@ const Form = () => {
         //console.log(seats);
       }}
     >
+      <div className={styles.carLogoContainer}>
+          <img className={styles.carLogo} src='/car.png'/>
+      </div>
+      <h1 className={styles.formHeader}>Schedule a Trip!</h1>
         <div className={styles.formInputContainer}>
       {name !== `` && <label for={`name`}>Name</label>}
       <input
@@ -121,8 +125,8 @@ const Form = () => {
       {/* <div className={styles.inputDateWrapper}> */}
       <label className={styles.dateLabel}></label>
       <input
-        className={styles.input}
-        placeholder={`Start Date`}
+        className={styles.inputDate}
+        placeholder={`Departure Date`}
         type={`date`}
         name={`startDate`}
         onChange={e => {
@@ -133,8 +137,8 @@ const Form = () => {
       {/* </div> */}
       {/* <div className={styles.inputDateWrapper}> */}
       <label className={styles.dateLabel}></label>
-      <input
-        className={styles.input}
+          <input
+        className={styles.inputDate}
         type={`date`}
         placeholder={`Return Date`}
         name={`returnDate`}
@@ -148,7 +152,7 @@ const Form = () => {
           <label for={`duration`}>Trip Duration </label>
 
           <input
-            className={styles.input}
+            className={styles.inputDate}
             type={`text`}
             name={`duration`}
             onChange={e => {
@@ -182,6 +186,7 @@ const Form = () => {
       <input type={`submit`} className={styles.submit} />
       <button className={styles.back}>Back</button>
     </form>
+    
     </div>
   );
 };
