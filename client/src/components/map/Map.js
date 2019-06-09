@@ -14,10 +14,6 @@ const Map = ({ options, onMount, className }) => {
     const map = new window.google.maps.Map(props.ref.current, options);
     onMount && onMount(map);
 
-    // var marker = new window.google.maps.Marker({
-    //   position: { lat: markerLocations[0].lat, lng: markerLocations[0].lng },
-    //   map: map,
-    // });
     for (let i = 0; i < markerLocations.length; i++) {
       let contentString = ReactDOMServer.renderToString(
         <InfoWindow
@@ -39,7 +35,6 @@ const Map = ({ options, onMount, className }) => {
       marker.addListener("click", function() {
         infowindow.open(map, marker);
       });
-      //   //marker.setMap(map);
     }
   };
 
