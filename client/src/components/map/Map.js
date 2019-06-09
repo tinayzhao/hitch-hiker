@@ -11,7 +11,9 @@ const Map = ({ options, onMount, className }) => {
     if (!window.google) {
       const script = document.createElement(`script`);
       script.type = `text/javascript`;
-      script.src = `https://maps.google.com/maps/api/js?key=AIzaSyBPTtJb7tqH2YeU4PxLTnRG94GTDmWvRfA`;
+      script.src = `https://maps.google.com/maps/api/js?key=${
+        process.env.REACT_APP_GOOGLE_API_KEY
+      }`;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);
