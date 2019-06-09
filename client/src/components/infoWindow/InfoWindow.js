@@ -8,6 +8,7 @@ const InfoWindow = ({
   departureTime,
   returnTime,
   seats,
+  callback,
 }) => {
   return (
     <div className={styles.container}>
