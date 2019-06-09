@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import Form from "./components/signUpForm/SignUp";
+import Map from "./components/map/Map";
 import "./App.css";
 
 function App() {
+  const [formActive, updateFormActive] = useState(false);
   return (
     <div className="App">
-      <Form />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      {!formActive && <Map />}
+      {formActive && <Form />}
+      {!formActive && (
+        <button
+          onClick={() => {
+            updateFormActive(true);
+          }}
         >
-          Learn React
-        </a>
-      </header> */}
+          Make Trip!
+        </button>
+      )}
     </div>
   );
 }
