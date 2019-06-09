@@ -10,9 +10,27 @@ const Map = ({ options, onMount, className }) => {
   const onLoad = () => {
     const map = new window.google.maps.Map(props.ref.current, options);
     const markers = firebase.database().ref("marker");
-
+    // var directionService = new window.google.maps.DirectionService;
+    // var directionDisplay = new window.google.maps.DirectionRenderer;
+    // directionsDisplay.setMap(map);
+    // var onChangeHandler = function() {
+    //   calculateAndDisplayRoute(directionService, directionsDisplay);
+    // }
+    // function caclulateAndDisplayRoute(directionsService, directionDisplay) {
+    //   directionsService.route({
+    //       origin: document.getElementById('start').value,
+    //       destination: document.getElementById('end').value,
+    //       travelMode: 'DRIVING'
+    //     }, function(response, status) {
+    //       if (status === 'OK') {
+    //         directionsDisplay.setDirections(response);
+    //       } else {
+    //         window.alert('Directions request failed due to ' + status);
+    //       }
+    //     });
+    // }
     markers.on("child_added", function(snapshot) {
-      const newPosition = snapshot.val();
+      const newPosition = snapshot.val().pos;
       const uluru = { lat: newPosition.lat, lng: newPosition.lng };
       const marker = new window.google.maps.Marker({
         position: uluru,
@@ -43,11 +61,7 @@ const Map = ({ options, onMount, className }) => {
         infoWindow.open(map, marker);
       });
     });
-
-    
     onMount && onMount(map);
-
-
   };
 
   useEffect(() => {

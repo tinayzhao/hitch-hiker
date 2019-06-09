@@ -17,76 +17,82 @@ const Form = () => {
     <form
       className={styles.container}
       onSubmit={e => {
-        const options = {
-          center: { lat: 37.7876, lng: -122.3966 },
-          zoom: 5,
-        };
 
-        var request = {
-          query: destination,
-          fields: ["name", "geometry"],
-        };
-
-        var location = {
-          lat: null,
-          lng: null,
-          name: destination,
-          driver: name,
-        };
-
-        var snap;
-        var hold = document.createElement("div");
-        var map = new window.google.maps.Map(hold, options);
-        var service = new window.google.maps.places.PlacesService(map);
-        service.findPlaceFromQuery(request, function(results, status) {
-          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              snap = results[i].geometry.location;
-              location.lat = snap.lat();
-              location.lng = snap.lng();
-              location.name = results[i].name;
-              //console.log(results[i].geometry.location.lat());
-              createMarker(location);
-            }
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
           }
-          signalSubmit();
+          setMarkers(pos);
         });
 
-        // var ref = firebase.database().ref('marker').push(destination, function(err) {
-        //   if (err) {  // Data was not written to firebase.
-        //     console.warn(err);
-        //   }
-        // });
+        function setMarkers(pos) {
+          const options = {
+            center: { lat: 37.7876, lng: -122.3966 },
+            zoom: 5,
+          };
 
-        function createMarker(place) {
-          firebase
-            .database()
-            .ref("marker")
-            .push(place, function(err) {
-              if (err) {
-                console.warn(err);
-              }
-            });
-        }
+          var request = {
+            query: destination,
+            fields: ["name", "geometry"],
+          };
 
-        function signalSubmit() {
-          firebase
-            .database()
-            .ref("submit")
-            .push(1, function(err) {
-              if (err) {
-                console.warn(err);
+          var new_pos = {
+           lat: null,
+           lng: null,
+          }
+
+          var trip = {
+            pos: null,
+            old_pos: pos,
+            name: null,
+            driver: name,
+          };
+
+          var snap;
+          var hold = document.createElement("div");
+          var map = new window.google.maps.Map(hold, options);
+          var service = new window.google.maps.places.PlacesService(map);
+          service.findPlaceFromQuery(request, function(results, status) {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+              for (var i = 0; i < results.length; i++) {
+                snap = results[i].geometry.location;
+                new_pos.lat = snap.lat();
+                new_pos.lng = snap.lng();
+                trip.name = results[i].name;
+                trip.pos = new_pos;
+                //console.log(results[i].geometry.location.lat());
+                createMarker(trip);
               }
-            });
+            }
+            signalSubmit();
+          });
+
+          function createMarker(place) {
+            firebase
+              .database()
+              .ref("marker")
+              .push(place, function(err) {
+                if (err) {
+                  console.warn(err);
+                }
+              });
+          }
+
+          function signalSubmit() {
+            firebase
+              .database()
+              .ref("submit")
+              .push(1, function(err) {
+                if (err) {
+                  console.warn(err);
+                }
+              });
+          }
         }
+        
 
         e.preventDefault();
-        //console.log(name);
-        //console.log(destination);
-        //console.log(leaveDate);
-        // console.log(returnDate);
-        //console.log(tripDuration);
-        //console.log(seats);
       }}
     >
       <div className={styles.carLogoContainer}>
