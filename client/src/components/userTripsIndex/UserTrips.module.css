@@ -1,0 +1,17 @@
+.tripsItemContainer {
+    border: 1px solid lightgray;
+    background: #F4F4F1;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.tripsContainer h1 {
+    text-align: center;
+
+}
+
+.tripsItemLabel {
+    font-weight: 500;
+    font-size: 10px;
+}

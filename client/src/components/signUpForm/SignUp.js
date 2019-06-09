@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 const Form = () => {
   const [name, updateName] = useState(``);
-  const [destination, updateDestination] = useState(``);
-  const [leaveDate, updateLeaveDate] = useState(``);
-  const [returnDate, updateReturnDate] = useState(``);
+  // const [destination, updateDestination] = useState(``);
+  // const [leaveDate, updateLeaveDate] = useState(``);
+  // const [returnDate, updateReturnDate] = useState(``);
 
   return (
     <form

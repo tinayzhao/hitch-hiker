@@ -1,12 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
-import Form from "./components/signUpForm/SignUp";
+// import Form from "./components/signUpForm/SignUp";
+import Trips from './components/userTripsIndex/UserTrips';
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <Form />
+      {/* <Form /> */}
+      <Trips />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
