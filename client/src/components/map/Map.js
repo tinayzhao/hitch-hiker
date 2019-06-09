@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import firebase from "./../../firebaseConfig.js"
+import InfoWindow from "../infoWindow/InfoWindow";
+import ReactDOMServer from "react-dom/server";
 
 const Map = ({ options, onMount, className }) => {
   const props = { ref: useRef(), className };
@@ -10,9 +12,23 @@ const Map = ({ options, onMount, className }) => {
     markers.on('child_added', function(snapshot) {
 
       var newPosition = snapshot.val();
-      //console.log(newPosition);
       var uluru = {lat: newPosition.lat, lng: newPosition.lng};
-      var marker = new window.google.maps.Marker({position: newPosition, map: map});
+      var marker = new window.google.maps.Marker({position: uluru, map: map});
+      let contentString = ReactDOMServer.renderToString(
+        <InfoWindow
+          destination={`Yosemite`}
+          departureTime={`1pm`}
+          returnTime={`2pm`}
+          seats={4}
+        />
+      );
+      console.log(contentString);
+      const infowindow = new window.google.maps.InfoWindow({
+        content: contentString,
+      });
+      marker.addListener("click", function() {
+        infowindow.open(map, marker);
+      });
 
     });
     onMount && onMount(map);
@@ -43,7 +59,7 @@ const Map = ({ options, onMount, className }) => {
 Map.defaultProps = {
   options: {
     center: { lat: 37.7876, lng: -122.3966 },
-    zoom: 5,
+    zoom: 15,
   },
 };
 
