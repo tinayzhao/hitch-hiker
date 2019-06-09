@@ -16,7 +16,8 @@ const Map = ({ options, onMount, className }) => {
       var marker = new window.google.maps.Marker({position: uluru, map: map});
       let contentString = ReactDOMServer.renderToString(
         <InfoWindow
-          destination={`Yosemite`}
+          driver={newPosition.driver}
+          destination={newPosition.name}
           departureTime={`1pm`}
           returnTime={`2pm`}
           seats={4}

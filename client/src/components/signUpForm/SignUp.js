@@ -29,6 +29,8 @@ const Form = () => {
         var location = {
           lat: null,
           lng: null,
+          name: destination,
+          driver: name,
         };
 
         var snap;
@@ -41,10 +43,13 @@ const Form = () => {
               snap = results[i].geometry.location;
               location.lat = snap.lat();
               location.lng = snap.lng();
+              location.name = results[i].name;
               //console.log(results[i].geometry.location.lat());
               createMarker(location)
             }
+          
           }
+          signalSubmit();
         });
 
         // var ref = firebase.database().ref('marker').push(destination, function(err) {
@@ -55,6 +60,14 @@ const Form = () => {
 
         function createMarker(place) {
           firebase.database().ref('marker').push(place, function(err) {
+            if (err) {
+              console.warn(err);
+            }
+          });
+        }
+
+        function signalSubmit() {
+          firebase.database().ref('submit').push(1, function(err) {
             if (err) {
               console.warn(err);
             }
