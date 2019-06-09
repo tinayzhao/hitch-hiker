@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import logo from "./logo.svg";
 import Form from "./components/signUpForm/SignUp";
 import Map from "./components/map/Map";
-import Trips from "./components/userTripsIndex/UserTrips";
 import styles from "./App.module.css";
+import firebase from "./firebaseConfig.js";
+import Trips from "./components/userTripsIndex/UserTrips";
 
 function App() {
   const [formActive, updateFormActive] = useState(false);
   const [cartActive, updateCartActive] = useState(false);
+  const markers = firebase.database().ref("submit");
+  markers.on("child_added", function(snapshot) {
+    markers.remove(function(err) {
+      if (err) {
+        console.warn(err);
+      }
+    });
+    updateFormActive(false);
+  });
   return (
     <div className="App">
       {!formActive && cartActive && <Trips />}

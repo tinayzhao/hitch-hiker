@@ -1,24 +1,25 @@
 import React, { useEffect, useRef } from "react";
+import firebase from "./../../firebaseConfig.js";
 import InfoWindow from "../infoWindow/InfoWindow";
 import ReactDOMServer from "react-dom/server";
 
 const Map = ({ options, onMount, className }) => {
   const props = { ref: useRef(), className };
-  const markerLocations = [
-    { lat: 37.7886, lng: -122.3976, name: `Bob` },
-    { lat: 37.7876, lng: -122.3966, name: `Sam` },
-    { lat: 37.7866, lng: -122.3956, name: `Tammy` },
-    { lat: 37.7866, lng: -122.3976, name: `Schmidt` },
-  ];
   const onLoad = () => {
     const map = new window.google.maps.Map(props.ref.current, options);
-    onMount && onMount(map);
+    const markers = firebase.database().ref("marker");
 
-    for (let i = 0; i < markerLocations.length; i++) {
+    markers.on("child_added", function(snapshot) {
+      const newPosition = snapshot.val();
+      const uluru = { lat: newPosition.lat, lng: newPosition.lng };
+      const marker = new window.google.maps.Marker({
+        position: uluru,
+        map: map,
+      });
       let contentString = ReactDOMServer.renderToString(
         <InfoWindow
-          driver={markerLocations[i].name}
-          destination={`Yosemite`}
+          driver={newPosition.driver}
+          destination={newPosition.name}
           departureTime={`1pm`}
           returnTime={`2pm`}
           seats={4}
@@ -28,14 +29,11 @@ const Map = ({ options, onMount, className }) => {
       const infowindow = new window.google.maps.InfoWindow({
         content: contentString,
       });
-      const marker = new window.google.maps.Marker({
-        position: { lat: markerLocations[i].lat, lng: markerLocations[i].lng },
-        map: map,
-      });
       marker.addListener("click", function() {
         infowindow.open(map, marker);
       });
-    }
+    });
+    onMount && onMount(map);
   };
 
   useEffect(() => {
@@ -44,7 +42,7 @@ const Map = ({ options, onMount, className }) => {
       script.type = `text/javascript`;
       script.src = `https://maps.google.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_API_KEY
-      }`;
+      }&libraries=places`;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);
@@ -58,7 +56,7 @@ const Map = ({ options, onMount, className }) => {
 Map.defaultProps = {
   options: {
     center: { lat: 37.7876, lng: -122.3966 },
-    zoom: 15,
+    zoom: 10,
   },
 };
 
