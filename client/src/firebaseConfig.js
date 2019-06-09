@@ -1,3 +1,4 @@
+import firebase from 'firebase'
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "hitchhiker-63082.firebaseapp.com",
@@ -8,4 +9,6 @@ var firebaseConfig = {
   appId: "1:1077226602012:web:ff6427772781d77b"
 };
 
-export default config;
+firebase.initialsizeApp(firebaseConfig);
+
+export default firebase;
