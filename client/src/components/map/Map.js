@@ -52,12 +52,7 @@ const Map = ({ options, onMount, className }) => {
     } else onLoad();
   });
 
-  return (
-    <div
-      {...props}
-      style={{ height: `70vh`, margin: `1em 0`, borderRadius: `0.5em` }}
-    />
-  );
+  return <div {...props} style={{ height: `92vh` }} />;
 };
 
 Map.defaultProps = {
